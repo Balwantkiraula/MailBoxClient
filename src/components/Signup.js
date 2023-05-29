@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -7,9 +8,11 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [signUp, setSignUp] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate=useNavigate('')
 
-  const SignUpHandler = (e) => {
+  const SignUpHandler = async(e) => {
     e.preventDefault();
+    navigate('/login')
 
     if (!email || !password || !confirmPassword) {
       setErrorMessage('All fields are mandatory');
@@ -21,25 +24,27 @@ function Signup() {
       return;
     }
 
-    const FatchApi = async ()=>{
-        try{
-        const response = await fetch(`https://mailboxclient-8985c-default-rtdb.firebaseio.com/users.json`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({email, password, confirmPassword}),
+    try {
+        const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDfoPwO0ULnk4ApUv1ImaDvLlCpo_747T8', 
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({email, password, confirmPassword})
         });
         const data = await response.json();
-        console.log(data);
-              
-    }
-    catch(error) {
-        console.error(error);
+        if(data.error){
+            throw new Error(data.error.message)
+            // console.log(data.error.message)
+        }
+
+        console.log(data); // contains the Firebase ID token, refresh token, and other user data
+        console.log('User has successfully signed up.')
+      } catch (error) {
+        console.error(error); // handle signup error
+        throw error;
       }
-}
-FatchApi()
-    
 
     const newSignUp = { email, password, confirmPassword };
     setSignUp([...signUp, newSignUp]);
@@ -52,7 +57,6 @@ FatchApi()
 
     console.log(signUp);
   };
-
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh', width: '500px' }}>
       <div className="container">
@@ -91,6 +95,9 @@ FatchApi()
           <button type="submit" className="btn btn-primary" onClick={SignUpHandler}>
             SignUp
           </button>
+          <div>
+          <Link to="/login">Already have an account ? Login</Link>
+          </div>
         </form>
       </div>
     </div>
@@ -98,3 +105,4 @@ FatchApi()
 }
 
 export default Signup;
+
