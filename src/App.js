@@ -1,21 +1,24 @@
-import React from 'react';
-import Signup from './components/Signup';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './components/Login';
-import Home from './components/Home';
+
+import './App.css';
+import { Routes,Route, } from 'react-router-dom';
+import Login from './components/pages/Login';
+import Home from './components/pages/Home';
+import SignUp from './components/pages/SignUp';
 
 function App() {
   return (
-    
-   <BrowserRouter>
-     <Routes>
-     <Route path='/' element={<Signup />} />
-     <Route path='/login' element={<Login />} />
-     <Route path='/home' element={<Home />} />
-
-     </Routes>
-    </BrowserRouter>
-   
+    <div className="App">
+      <header>
+        MailBox Client
+      </header>
+      
+      <Routes>
+        <Route path='/' element={<SignUp/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/home' element={<Home/>}></Route>
+      </Routes>
+    </div>
+  
   );
 }
 
