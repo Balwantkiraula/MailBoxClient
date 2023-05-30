@@ -16,8 +16,22 @@ const Inbox = ({senderEmail,subject,message,id,item,read,receiverEmail})=>{
         }
         updateEmailStatus();
     }
+    const deleteEmail = ()=>{
+        
+        function deleteEmailStatus(){
+            
+            
+            const creceiverEmail=receiverEmail.replace(/[^a-zA-Z0-9]/g,'');
+            const res=fetch(`https://mailboxclient-8985c-default-rtdb.firebaseio.com/inbox/${creceiverEmail}/${id}.json`,{
+                method:'DELETE',
+                
+            })
+        }
+        deleteEmailStatus();
+    }
     return(<li className='list-group-item' >
         <button className="btn btn-warning" onClick={openEmail}>Open</button>
+        <button className="btn btn-warning" onClick={deleteEmail}>Delete</button>
         <div>
             {toggle && <div>
             <span>From:{senderEmail}</span> <br></br>

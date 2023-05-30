@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Composer from "./Composer";
 import { useDispatch,useSelector } from "react-redux";
-import { authActions ,inboxActions,sentActions} from "../../store.Index";
+import { authActions ,inboxActions,sentActions} from "../../store/Index";
 import { useNavigate } from "react-router-dom";
 import Inbox from "../mailbox/Inbox";
 import 'bootstrap/dist/css/bootstrap.css'
