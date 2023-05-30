@@ -16,23 +16,29 @@ const authSlice=createSlice({
     }
 })
 
-const intitialInboxState = {inbox:[]}
+const intitialInboxState = {inbox:[],data:{}}
 const inboxSlice=createSlice({
     name:'inbox',
     initialState:intitialInboxState,
     reducers:{
         getInbox(state,action){
             state.inbox=action.payload;
+        },
+        changingInbox(state,action){
+            state.data=action.payload;
         }
     }
 })
-const intitialSentState = {sent:[]}
+const intitialSentState = {sent:[],data:{}}
 const sentSlice=createSlice({
     name:'sent',
     initialState:intitialSentState,
     reducers:{
         getSent(state,action){
             state.sent=action.payload;
+        },
+        changingSent(state,action){
+            state.data=action.payload;
         }
     }
 })

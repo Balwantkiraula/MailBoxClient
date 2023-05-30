@@ -1,11 +1,14 @@
 import { useRef } from "react";
-import { scryRenderedDOMComponentsWithClass } from "react-dom/test-utils";
-import { useSelector, } from "react-redux";
+
+import { useSelector, useDispatch} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.css'
+import { inboxActions,sentActions } from "../../store/Index";
 
 
 const Composer = ()=>{
     const senderEmail=useSelector(state=>state.auth.email);
+    const inboxChanging=useSelector(state=>state.inbox.data);
+    const dispatch=useDispatch();
     console.log(senderEmail)
     //const senderEmail=useSelector(state=>state.a)
     const emailRef=useRef();
@@ -34,13 +37,16 @@ const Composer = ()=>{
         })
         const sender=localStorage.getItem('userEmail');
         const senderE=senderEmail.replace(/[^a-zA-Z0-9]/g,'');
-        console.log(scryRenderedDOMComponentsWithClass)
+        //console.log()
         const resSent = await fetch(`https://mailboxclient-8985c-default-rtdb.firebaseio.com/sent/${senderE}.json`,{
             method:'POST',
             body:JSON.stringify(emailObj)
         })
         if(resReceived.ok && resSent.ok){
-            alert('message sent')
+            alert('message sent');
+
+            const data=resSent.json();
+            dispatch(sentActions.changingSent(data))
         }else{
             console.log("message not sent,error")
         }

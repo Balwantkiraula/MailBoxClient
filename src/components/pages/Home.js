@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Composer from "./Composer";
 import { useDispatch,useSelector } from "react-redux";
-import { authActions ,inboxActions,sentActions} from "../../store/Index";
+import { authActions ,inboxActions,sentActions} from "../../store.Index";
 import { useNavigate } from "react-router-dom";
 import Inbox from "../mailbox/Inbox";
 import 'bootstrap/dist/css/bootstrap.css'
@@ -12,7 +12,9 @@ const Home = () =>{
     
     const navigate=useNavigate();
     const currEmail=useSelector(state=>state.auth.email);
+
     const ccurrEmail=currEmail.replace(/[^a-zA-Z0-9]/g,'');
+    const sentChanging=useSelector(state=>state.sent.data);
     const dispatch=useDispatch();
     useEffect(()=>{
         if(currEmail===''){
@@ -67,7 +69,7 @@ const Home = () =>{
         }
         fetchInboxData();
         fetchSentData();
-    },[]);
+    },[sentChanging]);
     
     const inbox = useSelector(state=>state.inbox.inbox);
     const sent = useSelector(state=>state.sent.sent);
