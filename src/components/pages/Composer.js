@@ -22,7 +22,8 @@ const Composer = ()=>{
             receiverEmail:email,
             subject:subject,
             message:mesg,
-            senderEmail:senderEmail
+            senderEmail:senderEmail,
+            read:false
 
         }
         const emailc=email.replace(/[^a-zA-Z0-9]/g,'');

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Composer from "./Composer";
 import { useDispatch,useSelector } from "react-redux";
-import { authActions ,inboxActions,sentActions} from "../../store/Index";
+import { authActions ,inboxActions,sentActions} from "../../store.Index";
 import { useNavigate } from "react-router-dom";
 import Inbox from "../mailbox/Inbox";
 import 'bootstrap/dist/css/bootstrap.css'
@@ -92,10 +92,10 @@ const Home = () =>{
         setInboxActive(false);
     }
     const inboxItems=<ul className="list-group">{inbox.map((item)=>{if(inbox.length===0){return}
-        else{return (<Inbox  key={item.id} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)}
+        else{return (<Inbox id={item.id}  key={item.id} item={item} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)}
     })}</ul>
     const sentItems=<ul className="list-group">{sent.map((item)=>{
-        return (<Sent  key={item.id} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)
+        return (<Sent id={item.id}  key={item.id} item={item} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)
     })}</ul>
     console.log("checkkkkin"+sentItems)
     return(<div className="justify-content-between">
