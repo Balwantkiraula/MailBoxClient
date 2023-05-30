@@ -16,7 +16,7 @@ const authSlice=createSlice({
     }
 })
 
-const intitialInboxState = {inbox:[],data:{}}
+const intitialInboxState = {inbox:[],idata:{}}
 const inboxSlice=createSlice({
     name:'inbox',
     initialState:intitialInboxState,
@@ -25,7 +25,7 @@ const inboxSlice=createSlice({
             state.inbox=action.payload;
         },
         changingInbox(state,action){
-            state.data=action.payload;
+            state.idata=action.payload;
         }
     }
 })

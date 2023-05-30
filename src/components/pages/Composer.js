@@ -45,7 +45,7 @@ const Composer = ()=>{
         if(resReceived.ok && resSent.ok){
             alert('message sent');
 
-            const data=resSent.json();
+            const data=await resSent.json();
             dispatch(sentActions.changingSent(data))
         }else{
             console.log("message not sent,error")

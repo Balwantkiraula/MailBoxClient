@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Composer from "./Composer";
 import { useDispatch,useSelector } from "react-redux";
-import { authActions ,inboxActions,sentActions} from "../../store.Index";
+import { authActions ,inboxActions,sentActions} from "../../store/Index";
 import { useNavigate } from "react-router-dom";
 import Inbox from "../mailbox/Inbox";
 import 'bootstrap/dist/css/bootstrap.css'
@@ -12,10 +12,13 @@ const Home = () =>{
     
     const navigate=useNavigate();
     const currEmail=useSelector(state=>state.auth.email);
+    const inboxChanging=useSelector(state=>state.inbox.idata);
+    const sentChanging=useSelector(state=>state.sent.data);
 
     const ccurrEmail=currEmail.replace(/[^a-zA-Z0-9]/g,'');
-    const sentChanging=useSelector(state=>state.sent.data);
+    
     const dispatch=useDispatch();
+    
     useEffect(()=>{
         if(currEmail===''){
             navigate('/login');
@@ -25,11 +28,13 @@ const Home = () =>{
             const res = await fetch(`https://mailboxclient-8985c-default-rtdb.firebaseio.com/inbox/${ccurrEmail}.json`);
             if(res.ok){
             const data=await res.json();
-            console.log(data);
+            console.log("coming data"+data);
+            const loadedinbox=[];
             if(data===null){
+                //dispatch(inboxActions.getInbox(loadedinbox));
                 return
-            }
-                const loadedinbox=[];
+            }else{
+                
                 for(const key of Object.keys(data)){
                     let temp={
                         id:key,
@@ -40,7 +45,7 @@ const Home = () =>{
                     }
                     loadedinbox.push(temp);
                 }
-                dispatch(inboxActions.getInbox(loadedinbox))
+                dispatch(inboxActions.getInbox(loadedinbox))}
             }else{console.log('error in inboxfetch')}
         }
         async function fetchSentData(){
@@ -69,13 +74,13 @@ const Home = () =>{
         }
         fetchInboxData();
         fetchSentData();
-    },[sentChanging]);
+    },[inboxChanging,sentChanging]);
     
     const inbox = useSelector(state=>state.inbox.inbox);
     const sent = useSelector(state=>state.sent.sent);
     const [toggleComposer,setToggleComposer]=useState(false);
     const [inboxActive,setInboxActive] = useState(false);
-    const [sentActive,setSentActive] = useState(false);
+    const [sentActive,setSentActive] = useState(false)
     const logout = ()=> {
         dispatch(authActions.logout());
         navigate('/login');
