@@ -2,6 +2,7 @@ import { useRef } from "react"
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../store/Index";
+import 'bootstrap/dist/css/bootstrap.css'
 
 const Login = () => {
     const navigate=useNavigate();
@@ -38,14 +39,14 @@ const Login = () => {
     }
 
     return(<div>
-            <form onSubmit={loginHandler}>
+            <form onSubmit={loginHandler} className="form-group">
                 <h4>Login</h4>
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" ref={emailRef} required></input>
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" ref={passwordRef} required></input>
+                <label htmlFor="email" className="form-label">Email</label>
+                <input type="email" id="email" ref={emailRef} required className="form-control"></input>
+                <label htmlFor="password" className="form-label">Password</label>
+                <input type="password" id="password" ref={passwordRef} required className="form-control"></input>
                  
-                <button type="submit">Login</button>
+                <button type="submit" className="btn btn-dark">Login</button><br/>
                 <Link to='/'>Dont have an account ,signup</Link>
             </form>
         </div>)

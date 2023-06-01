@@ -31,7 +31,7 @@ const Home = () =>{
             console.log("coming data"+data);
             const loadedinbox=[];
             if(data===null){
-                //dispatch(inboxActions.getInbox(loadedinbox));
+                dispatch(inboxActions.getInbox(loadedinbox));
                 return
             }else{
                 
@@ -41,7 +41,8 @@ const Home = () =>{
                         senderEmail:data[key].senderEmail,
                         subject:data[key].subject,
                         message:data[key].message,
-                        receiverEmail:data[key].receiverEmail
+                        receiverEmail:data[key].receiverEmail,
+                        date:data[key].date
                     }
                     loadedinbox.push(temp);
                 }
@@ -54,6 +55,7 @@ const Home = () =>{
             const data=await res.json();
             console.log(data);
             if(data===null){
+                dispatch(sentActions.getSent([]))
                 return
             }
                 const loadedsent=[];
@@ -63,7 +65,8 @@ const Home = () =>{
                         senderEmail:data[key].senderEmail,
                         subject:data[key].subject,
                         message:data[key].message,
-                        receiverEmail:data[key].receiverEmail
+                        receiverEmail:data[key].receiverEmail,
+                        date:data[key].date
                     }
                     loadedsent.push(temp);
                 }
@@ -72,7 +75,7 @@ const Home = () =>{
                 console.log("something wrong in sentfetch")
             }
         }
-        fetchInboxData();
+        fetchInboxData(); 
         fetchSentData();
     },[inboxChanging,sentChanging]);
     
@@ -99,10 +102,10 @@ const Home = () =>{
         setInboxActive(false);
     }
     const inboxItems=<ul className="list-group">{inbox.map((item)=>{if(inbox.length===0){return}
-        else{return (<Inbox id={item.id}  key={item.id} item={item} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)}
+        else{return (<Inbox date={item.date} read={item.read} id={item.id}  key={item.id} item={item} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)}
     })}</ul>
     const sentItems=<ul className="list-group">{sent.map((item)=>{
-        return (<Sent id={item.id}  key={item.id} item={item} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)
+        return (<Sent date={item.date} read={item.read} id={item.id}  key={item.id} item={item} subject={item.subject} senderEmail={item.senderEmail} message={item.message} receiverEmail={item.receiverEmail} />)
     })}</ul>
     console.log("checkkkkin"+sentItems)
     return(<div className="justify-content-between">
